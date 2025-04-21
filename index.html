@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUELI ENGINEERING LTD - Engineering Solutions for a Sustainable Future</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+       /* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif; /* Changed from Arial to Poppins */
+}
+
+/* Make sure all text elements use Poppins */
+body, input, textarea, button, select {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Adjust font weights for better hierarchy */
+body {
+    font-weight: 400; /* Regular weight for body text */
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600; /* Semi-bold for headings */
+}
+
+/* Special cases */
+.logo {
+    font-weight: 700; /* Bold for logo */
+}
+
+nav ul li a {
+    font-weight: 500; /* Medium for navigation */
+}
+
+.btn, .whatsapp-btn {
+    font-weight: 500; /* Medium for buttons */
+}
+
+.section-title {
+    font-weight: 600; /* Semi-bold for section titles */
+}
+
+.price {
+    font-weight: 500; /* Medium for prices */
+}
+
+footer {
+    font-weight: 300; /* Light for footer text */
+}
+
+footer h3 {
+    font-weight: 500; /* Medium for footer headings */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .slide-content h2 {
+        font-size: 28px; /* Slightly smaller on mobile */
+    }
+    
+    .section-title {
+        font-size: 24px;
+    }
+}
+.container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #FFA500;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #FFA500;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Hero Slider */
+        .hero-slider {
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide-content {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            background-color: rgba(0, 51, 102, 0.8);
+            color: white;
+            padding: 20px;
+            max-width: 500px;
+        }
+        
+        .slide-content h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .slide-content p {
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #FFA500;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #e69500;
+        }
+        
+        /* Featured Products */
+        .section-title {
+            text-align: center;
+            margin: 40px 0 30px;
+            font-size: 28px;
+            color: #003366;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .product-card {
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-info h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .product-info p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .price-contact {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: #003366;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+        
+        .whatsapp-btn i {
+            font-size: 16px;
+        }
+        
+        /* About Us */
+        .about-section {
+            background-color: #f9f9f9;
+            padding: 50px 0;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h2 {
+            color: #003366;
+            margin-bottom: 20px;
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+        }
+        
+        .about-image {
+            flex: 1;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Services */
+        .services-section {
+            padding: 50px 0;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-icon {
+            background-color: #003366;
+            color: white;
+            font-size: 40px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .service-info {
+            padding: 20px;
+        }
+        
+        .service-info h3 {
+            color: #003366;
+            margin-bottom: 10px;
+        }
+        
+        /* Partners */
+        .partners-section {
+            background-color: #f9f9f9;
+            padding: 50px 0;
+        }
+        
+        .partners-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .partner-logo {
+            width: 150px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .partner-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Contact */
+        .contact-section {
+            padding: 50px 0;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .contact-info h3 {
+            color: #003366;
+            margin-bottom: 20px;
+        }
+        
+        .contact-details {
+            margin-bottom: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .contact-item i {
+            color: #FFA500;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .contact-form textarea {
+            height: 150px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #003366;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-col h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-col ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: #FFA500;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #FFA500;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: #ddd;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 20px;
+            }
+            
+            .slide-content {
+                left: 20px;
+                bottom: 20px;
+                max-width: 80%;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                margin-top: 30px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">JUELI <span>ENGINEERING</span></div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Slider -->
+    <section class="hero-slider">
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1605152276897-4f618f831968?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+            <div class="slide-content">
+                <h2>Premium Engineering Solutions</h2>
+                <p>Delivering high-quality mechanical services and steel fabrication for industrial and commercial projects.</p>
+                <a href="shop.html" class="btn">Shop Now</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1581093057305-3ec4e7b874e9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+            <div class="slide-content">
+                <h2>Expert HVAC Systems</h2>
+                <p>Energy-efficient heating, ventilation, and air conditioning solutions tailored to your needs.</p>
+                <a href="shop.html" class="btn">Explore Services</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');">
+            <div class="slide-content">
+                <h2>Professional Lift Installation</h2>
+                <p>Safe and reliable lift systems for residential and commercial buildings.</p>
+                <a href="shop.html" class="btn">View Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="container">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1593784991095-a205069470b6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="HVAC Unit">
+                </div>
+                <div class="product-info">
+                    <h3>Commercial HVAC Unit</h3>
+                    <p>Energy-efficient HVAC system for commercial buildings with advanced temperature control.</p>
+                    <div class="price-contact">
+                        <span class="price">Contact for Price</span>
+                        <button class="whatsapp-btn" onclick="sendWhatsApp('Commercial HVAC Unit')">
+                            <i class="fab fa-whatsapp"></i> Inquire
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Steel Beams">
+                </div>
+                <div class="product-info">
+                    <h3>Industrial Steel Beams</h3>
+                    <p>High-quality steel beams for construction and industrial applications.</p>
+                    <div class="price-contact">
+                        <span class="price">Contact for Price</span>
+                        <button class="whatsapp-btn" onclick="sendWhatsApp('Industrial Steel Beams')">
+                            <i class="fab fa-whatsapp"></i> Inquire
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Elevator System">
+                </div>
+                <div class="product-info">
+                    <h3>Passenger Elevator System</h3>
+                    <p>Modern elevator system for residential and commercial buildings with safety features.</p>
+                    <div class="price-contact">
+                        <span class="price">Contact for Price</span>
+                        <button class="whatsapp-btn" onclick="sendWhatsApp('Passenger Elevator System')">
+                            <i class="fab fa-whatsapp"></i> Inquire
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Welding Machine">
+                </div>
+                <div class="product-info">
+                    <h3>Industrial Welding Machine</h3>
+                    <p>Professional-grade welding machine for heavy-duty fabrication work.</p>
+                    <div class="price-contact">
+                        <span class="price">Contact for Price</span>
+                        <button class="whatsapp-btn" onclick="sendWhatsApp('Industrial Welding Machine')">
+                            <i class="fab fa-whatsapp"></i> Inquire
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About JUELI ENGINEERING LTD</h2>
+                    <p>Founded in December 2024, JUELI ENGINEERING LTD is based in Nairobi Industrial Area and offers a broad spectrum of engineering services. Our company specializes in mechanical solutions, steel fabrication, HVAC installations, plumbing, welding, lift services, and the supply of engineering materials.</p>
+                    <p>We pride ourselves on providing solutions that are efficient, reliable, and tailored to the unique needs of each client. Our goal is to exceed client expectations while ensuring the highest standards of safety, reliability, and performance in all our projects.</p>
+                    <p>With a vision to be a premier provider of engineering services in Kenya and internationally, we are committed to excellence in technical capabilities, customer service, and the delivery of innovative solutions.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="JUELI Engineering Team">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Services -->
+    <section class="services-section">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="service-info">
+                        <h3>Mechanical Services</h3>
+                        <p>Design, installation, and ongoing maintenance of mechanical systems for various applications.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="service-info">
+                        <h3>Steel Structure Design & Fabrication</h3>
+                        <p>Providing top-quality steel structures tailored for residential, commercial, and industrial applications.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <div class="service-info">
+                        <h3>HVAC Systems</h3>
+                        <p>Delivering energy-efficient heating, ventilation, and air conditioning systems for all building types.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="service-info">
+                        <h3>Plumbing & Piping Solutions</h3>
+                        <p>Comprehensive installation and maintenance of plumbing and piping systems for water, gas, and waste.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="service-info">
+                        <h3>Welding & MIG Fabrication</h3>
+                        <p>Specializing in precision welding for construction and heavy-duty applications.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-elevator"></i>
+                    </div>
+                    <div class="service-info">
+                        <h3>Lift Installation Services</h3>
+                        <p>Complete lift design, installation, and maintenance for residential and commercial buildings.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Partners -->
+    <section class="partners-section">
+        <div class="container">
+            <h2 class="section-title">Our Partners</h2>
+            <div class="partners-grid">
+                <div class="partner-logo">
+                    <img src="https://via.placeholder.com/150x80?text=Partner+1" alt="Partner 1">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://via.placeholder.com/150x80?text=Partner+2" alt="Partner 2">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://via.placeholder.com/150x80?text=Partner+3" alt="Partner 3">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://via.placeholder.com/150x80?text=Partner+4" alt="Partner 4">
+                </div>
+                <div class="partner-logo">
+                    <img src="https://via.placeholder.com/150x80?text=Partner+5" alt="Partner 5">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <p><strong>Address:</strong></p>
+                                <p>15976-00100, Nairobi Industrial Area, Kenya</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <p><strong>Phone:</strong></p>
+                                <p>+254 704 553 400</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <p><strong>Email:</strong></p>
+                                <p>muchuieliud04@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <p><strong>Working Hours:</strong></p>
+                                <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
+                                <p>Saturday: 9:00 AM - 1:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    <form>
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <input type="text" placeholder="Subject">
+                        <textarea placeholder="Your Message" required></textarea>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>JUELI ENGINEERING</h3>
+                    <p>Engineering Solutions for a Sustainable Future. Providing innovative, cost-efficient, and high-quality engineering services across multiple sectors.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Services</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="#">Mechanical Services</a></li>
+                        <li><a href="#">Steel Fabrication</a></li>
+                        <li><a href="#">HVAC Systems</a></li>
+                        <li><a href="#">Plumbing & Piping</a></li>
+                        <li><a href="#">Lift Installation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Nairobi Industrial Area, Kenya</li>
+                        <li><i class="fas fa-phone-alt"></i> +254 704 553 400</li>
+                        <li><i class="fas fa-envelope"></i> muchuieliud04@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 JUELI ENGINEERING LTD. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hero Slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        // Auto slide change every 5 seconds
+        setInterval(nextSlide, 5000);
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu');
+        const nav = document.querySelector('nav ul');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // WhatsApp function
+        function sendWhatsApp(productName) {
+            const phoneNumber = '+254704553400';
+            const message = `Hello JUELI ENGINEERING, I'm interested in your ${productName}. Could you please provide more information and pricing details?`;
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+        }
+    </script>
+</body>
+</html>
