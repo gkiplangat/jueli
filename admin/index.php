@@ -33,14 +33,14 @@ if(isset($_POST['submit'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soka Toto Muda Initiative</title>
+    <title>Jueli Engineering Ltd</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="container">
         <form action="" method="POST" class="login-email">
-            <p class="login-text" style="font-size: 2rem; font-weight:800;">STMI Trust</p>
+            <p class="login-text" style="font-size: 2rem; font-weight:800;">Jueli Engineering</p>
             <div class="input-group">
                 <input type="email" placeholder="Email" name="email" value="<?php echo $_POST['email'];?>" required>
             </div>

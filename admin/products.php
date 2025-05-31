@@ -87,7 +87,7 @@
                 <div class="modal-content">
                     <div class="modal-header text-light">
                         <h5 class="modal-title" id="addItemModalLabel">
-                            Add New News
+                            Add New Product
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -101,14 +101,14 @@
                                     // Include database configuration
                                     include 'config.php';
 
-                                    // Fetch departments from the database
+                                    // Fetch categories from the database
                                     $query = "SELECT category_name FROM product_categories";
                                     $result = $conn->query($query);
 
                                     if ($result->num_rows > 0) {
-                                        // Loop through each department and create an option
+                                        // Loop through each category and create an option
                                         while ($row = $result->fetch_assoc()) {
-                                            echo '<option value="' . htmlspecialchars($row['category_name']) . '">' . htmlspecialchars($row['department_name']) . '</option>';
+                                            echo '<option value="' . htmlspecialchars($row['category_name']) . '">' . htmlspecialchars($row['category_name']) . '</option>';
                                         }
                                     } else {
                                         echo '<option value="" disabled>No category available</option>';
