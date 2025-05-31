@@ -30,17 +30,18 @@ if ($result->num_rows > 0) {
                         <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                     </div>
                     <div class='modal-body'>
-                        <form action='actions/update_leader.php' method='POST' enctype='multipart/form-data'>
+                        <form action='actions/update_category.php' method='POST' enctype='multipart/form-data'>
                             <input type='hidden' name='id' value='" . $row['id'] . "'>
+                             <div class='mb-3'>
+                                <label class='form-label'>Picture</label>
+                                <input type='file' class='form-control' name='picture' accept='image/*'>
+                            </div>
                             <div class='mb-3'>
                                 <label class='form-label'>Category Name</label>
                                 <input type='text' class='form-control' name='category_name' value='" . htmlspecialchars($row['category_name']) . "' required>
                             </div>
                             
-                            <div class='mb-3'>
-                                <label class='form-label'>Picture</label>
-                                <input type='file' class='form-control' name='picture' accept='image/*'>
-                            </div>
+                           
                             <div class='modal-footer'>
                                 <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
                                 <button type='submit' class='btn btn-primary'>Save Changes</button>
@@ -65,7 +66,7 @@ if ($result->num_rows > 0) {
                     </div>
                     <div class='modal-footer'>
                         <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-                        <a href='actions/delete_leader.php?id=" . $row['id'] . "' class='btn btn-danger'>Delete</a>
+                        <a href='actions/delete_category.php?id=" . $row['id'] . "' class='btn btn-danger'>Delete</a>
                     </div>
                 </div>
             </div>
