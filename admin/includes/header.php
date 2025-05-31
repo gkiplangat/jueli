@@ -53,9 +53,7 @@ if (!isset($_SESSION['username'])) {
                 <ul class="navbar-nav">
                     <li><a href="dashboard.php" class="nav-link px-3 active"><i
                                 class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
-                    <li><a href="news.php" class="nav-link px-3 active"><i class="bi bi-newspaper me-2"></i>Events</a>
-                    </li>
-                    <li><a href="gallery.php" class="nav-link px-3 active"><i class="bi bi-images me-2"></i>Gallery</a>
+                    <li><a href="news.php" class="nav-link px-3 active"><i class="bi bi-newspaper me-2"></i>Products</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link px-3 active dropdown-toggle" data-bs-toggle="dropdown">
