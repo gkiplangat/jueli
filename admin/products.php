@@ -14,11 +14,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <!-- Check for success or error flags -->
-                    <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'NewsEdit'): ?>
+                    <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'ProductEdit'): ?>
                     <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
                         Record Updated successfully!
                     </div>
-                    <?php elseif (isset($_GET['error']) && isset($_GET['type']) && $_GET['type'] === 'NewsEdit'): ?>
+                    <?php elseif (isset($_GET['error']) && isset($_GET['type']) && $_GET['type'] === 'ProductEdit'): ?>
                     <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
                         Failed to Update Record. Please try again.
                     </div>
@@ -26,11 +26,11 @@
                     <?php endif; ?>
 
                     <!-- Check for success or error flags for Deletion -->
-                    <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'NewsDelete'): ?>
+                    <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'ProductDelete'): ?>
                     <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
                         Record Deleted Successfully!
                     </div>
-                    <?php elseif (isset($_GET['error']) && isset($_GET['type']) && $_GET['type'] === 'NewsDelete'): ?>
+                    <?php elseif (isset($_GET['error']) && isset($_GET['type']) && $_GET['type'] === 'ProductDelete'): ?>
                     <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
                         Failed to Delete Record Please try again.
                     </div>
@@ -38,11 +38,11 @@
                     <?php endif; ?>
 
                     <!-- Check for success or error flags for Adding Records -->
-                    <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'NewsAdd'): ?>
+                    <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'ProductAdd'): ?>
                     <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
                         Record Added Successfully!
                     </div>
-                    <?php elseif (isset($_GET['error']) && isset($_GET['type']) && $_GET['type'] === 'NewsAdd'): ?>
+                    <?php elseif (isset($_GET['error']) && isset($_GET['type']) && $_GET['type'] === 'ProductAdd'): ?>
                     <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
                         Failed to Add Record Please try again.
                     </div>

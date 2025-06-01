@@ -42,7 +42,7 @@ if ($result->num_rows > 0) {
                         <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                     </div>
                     <div class='modal-body'>
-                        <form action='actions/edit_news.php' method='POST' enctype='multipart/form-data'>
+                        <form action='actions/edit_products.php' method='POST' enctype='multipart/form-data'>
                             <!-- Hidden input for ID -->
                             <input type='hidden' name='id' value='$id'>
                             
@@ -92,7 +92,7 @@ if ($result->num_rows > 0) {
                     </div>
                     <div class='modal-footer'>
                         <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-                        <a href='actions/delete_news.php?id=$id' class='btn btn-danger'>Delete</a>
+                        <a href='actions/delete_products.php?id=$id' class='btn btn-danger'>Delete</a>
                     </div>
                 </div>
             </div>

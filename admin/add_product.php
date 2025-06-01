@@ -46,11 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmt->execute()) {
             // Redirect with success flag
-            header("Location: products.php?success&type=ProductsAdd");
+            header("Location: products.php?success&type=ProductAdd");
             exit();
         } else {
             // Redirect with error flag
-            header("Location: products.php?error&type=ProductsAdd");
+            header("Location: products.php?error&type=ProductAdd");
             exit();
         }
 
