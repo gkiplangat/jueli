@@ -565,6 +565,9 @@ footer {
     overflow-x: auto;
     /* Allows horizontal scrolling on mobile */
 }
+.fa-whatsapp{
+  color: var(--primary-color);
+}
 
 .team-container {
     width: 100%;
