@@ -11,43 +11,64 @@ $result = $conn->query($sql);
 // Check if there are results
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+        // Extract variables from the row array
+        $id = $row['id'];
+        $product_picture = $row['product_picture'];
+        $product_category = $row['product_category'];
+        $product_name = $row['product_name'];
+        $product_description = $row['product_description'];
+
         echo "<tr>";
-        echo "<td><img src='../uploads/" . htmlspecialchars($row['product_picture']) . "' alt='Picture' class='img-thumbnail' width='50' height='50'></td>";
-        echo "<td>" . htmlspecialchars($row['product_category']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['product_name']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['product_description']) . "</td>";
+        echo "<td><img src='../uploads/" . htmlspecialchars($product_picture) . "' alt='Picture' class='img-thumbnail' width='50' height='50'></td>";
+        echo "<td>" . htmlspecialchars($product_category) . "</td>";
+        echo "<td>" . htmlspecialchars($product_name) . "</td>";
+        echo "<td>" . htmlspecialchars($product_description) . "</td>";
         echo "<td>
-                <button class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#editModal" . $row['id'] . "'>Edit</button>
-                <button class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal" . $row['id'] . "'>Delete</button>
+                <button class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#editModal" . $id . "'>Edit</button>
+                <button class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal" . $id . "'>Delete</button>
               </td>";
         echo "</tr>";
 
         // Edit Modal
         echo "
-        <div class='modal fade' id='editModal" . $row['id'] . "' tabindex='-1' aria-labelledby='editModalLabel' aria-hidden='true'>
+        <div class='modal fade' id='editModal$id' tabindex='-1' aria-labelledby='editModalLabel$id' aria-hidden='true'>
             <div class='modal-dialog'>
                 <div class='modal-content'>
                     <div class='modal-header'>
-                        <h5 class='modal-title text-white'>Edit Category</h5>
+                        <h5 class='modal-title text-light' id='editModalLabel$id'>Edit Product</h5>
                         <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                     </div>
                     <div class='modal-body'>
-                        <form action='actions/update_category.php' method='POST' enctype='multipart/form-data'>
-                            <input type='hidden' name='id' value='" . $row['id'] . "'>
-                             <div class='mb-3'>
-                                <label class='form-label'>Picture</label>
-                                <input type='file' class='form-control' name='picture' accept='image/*'>
-                            </div>
+                        <form action='actions/edit_featured.php' method='POST' enctype='multipart/form-data'>
+                            <!-- Hidden input for ID -->
+                            <input type='hidden' name='id' value='$id'>
+                            
+                            <!-- Product Category -->
                             <div class='mb-3'>
-                                <label class='form-label'>Category Name</label>
-                                <input type='text' class='form-control' name='product_category' value='" . htmlspecialchars($row['product_category']) . "' required>
+                                <label for='product_category$id' class='form-label'>Product Category</label>
+                                <input type='text' class='form-control' id='product_category$id' name='product_category' value='" . htmlspecialchars($product_category) . "' required>
                             </div>
                             
-                           
-                            <div class='modal-footer'>
-                                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-                                <button type='submit' class='btn btn-primary'>Save Changes</button>
+                            <!-- Product Name -->
+                            <div class='mb-3'>
+                                <label for='product_name$id' class='form-label'>Product Name</label>
+                                <input type='text' class='form-control' id='product_name$id' name='product_name' value='" . htmlspecialchars($product_name) . "' required>
                             </div>
+                            
+                            <!-- Product Description -->
+                            <div class='mb-3'>
+                                <label for='product_description$id' class='form-label'>Product Description</label>
+                                <textarea class='form-control' id='product_description$id' name='product_description' rows='3' required>" . htmlspecialchars($product_description) . "</textarea>
+                            </div>
+                            
+                            <!-- Product Picture -->
+                            <div class='mb-3'>
+                                <label for='product_picture$id' class='form-label'>Product Picture</label>
+                                <input type='file' class='form-control' id='product_picture$id' name='product_picture'>
+                                <img src='../uploads/$product_picture' alt='Current Photo' width='100' height='100' class='mt-2'>
+                            </div>
+                            
+                            <button type='submit' class='btn btn-primary'>Save Changes</button>
                         </form>
                     </div>
                 </div>
@@ -56,26 +77,26 @@ if ($result->num_rows > 0) {
 
         // Delete Modal
         echo "
-        <div class='modal fade' id='deleteModal" . $row['id'] . "' tabindex='-1' aria-labelledby='deleteModalLabel' aria-hidden='true'>
+        <div class='modal fade' id='deleteModal$id' tabindex='-1' aria-labelledby='deleteModalLabel' aria-hidden='true'>
             <div class='modal-dialog'>
                 <div class='modal-content'>
                     <div class='modal-header'>
-                        <h5 class='modal-title text-white'>Delete Category</h5>
+                        <h5 class='modal-title text-white'>Delete Product</h5>
                         <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                     </div>
                     <div class='modal-body'>
-                        <p>Are you sure you want to delete <strong>" . htmlspecialchars($row['product_name']) . "</strong>?</p>
+                        <p>Are you sure you want to delete <strong>" . htmlspecialchars($product_name) . "</strong>?</p>
                     </div>
                     <div class='modal-footer'>
                         <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-                        <a href='actions/delete_category.php?id=" . $row['id'] . "' class='btn btn-danger'>Delete</a>
+                        <a href='actions/delete_featured.php?id=$id' class='btn btn-danger'>Delete</a>
                     </div>
                 </div>
             </div>
         </div>";
     }
 } else {
-    echo "<tr><td colspan='5' class='text-center'>No Category found</td></tr>";
+    echo "<tr><td colspan='5' class='text-center'>No products found</td></tr>";
 }
 
 // Close the database connection

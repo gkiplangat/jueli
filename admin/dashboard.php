@@ -241,40 +241,41 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-7">
                 <div class="card">
                     <!-- Check for success or error flags -->
-                    <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'category'): ?>
+                    <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'featuredS'): ?>
                     <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                        New Category added successfully!
+                        New Product added successfully!
                     </div>
-                    <?php elseif (isset($_GET['error']) && isset($_GET['type']) && $_GET['type'] === 'category'): ?>
+                    <?php elseif (isset($_GET['error']) && isset($_GET['type']) && $_GET['type'] === 'featuredF'): ?>
                     <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
-                        Failed to add the Category. Please try again.
+                        Failed to add the Product. Please try again.
                     </div>
 
                     <?php endif; ?>
 
                     <!--Delete Category-->
                     <!-- Check for success or error flags -->
-                    <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'categoryDelS'): ?>
+                    <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'featured_categoryDelS'): ?>
                     <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
                         Record Deleted Successfuly!
                     </div>
-                    <?php elseif (isset($_GET['error']) && isset($_GET['type']) && $_GET['type'] === 'categoryDelF'): ?>
+                    <?php elseif (isset($_GET['error']) && isset($_GET['type']) && $_GET['type'] === 'featured_categoryDelF'): ?>
                     <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
                         Failed to Delete. Please try again.
                     </div>
 
                     <?php endif; ?>
 
-                    <!--Update Category-->
+                    <!--Update featured-->
                     <!-- Check for success or error flags -->
-                    <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'categoryUpS'): ?>
+                    <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'featured_categoryUpS'): ?>
                     <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
                         Record Updated Successfuly!
                     </div>
-                    <?php elseif (isset($_GET['error']) && isset($_GET['type']) && $_GET['type'] === 'catogoryUpF'): ?>
+                    <?php elseif (isset($_GET['error']) && isset($_GET['type']) && $_GET['type'] === 'featured_catogoryUpF'): ?>
                     <div id="error-alert" class="alert alert-danger alert-dismissible fade show" role="alert">
                         Failed to Update. Please try again.
                     </div>
@@ -330,13 +331,13 @@
             </div>
         </div>
 
-        <!-- Modal for Adding New Category -->
+        <!-- Modal for Adding featured -->
         <div class="modal fade" id="addfeatured" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header text-light">
                         <h5 class="modal-title" id="addItemModalLabel">
-                            Add New Product
+                            Add Featured Product
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -408,6 +409,51 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal for Adding New Category -->
+        <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="addCategoryModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-white">
+                        <h5 class="modal-title" id="addCategoryModalLabel">
+                            Add New Product Category
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addCategoryForm" action="add_product_category.php" method="POST"
+                            enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="category_name" class="form-label">Category Name</label>
+                                <input type="text" class="form-control" id="category_name" name="category_name"
+                                    placeholder="Enter Category Name" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="picture" class="form-label">Picture</label>
+                                        <input type="file" accept="image/*" class="form-control" id="picture"
+                                            name="picture" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-primary" id="saveCategoryButton">
+                                    Save Category
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
 
