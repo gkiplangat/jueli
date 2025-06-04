@@ -4,33 +4,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JUELI ENGINEERING LTD - Engineering Solutions for a Sustainable Future</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <title>JUELI ENGINEERING LTD</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+    .navbar {
+        background-color: #003366 !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+
+    .navbar-brand span {
+        color: #FFA500;
+    }
+
+    .nav-link {
+        color: rgba(255, 255, 255, 0.85) !important;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        margin: 0 0.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus {
+        color: white !important;
+        transform: translateY(-2px);
+    }
+
+    .nav-link.active {
+        color: white !important;
+        font-weight: 600;
+        border-bottom: 2px solid #FFA500;
+    }
+
+    .navbar-toggler {
+        border: none;
+        padding: 0.5rem;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    .contact-btn {
+        background-color: #FFA500;
+        color: white !important;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1.25rem !important;
+        margin-left: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .contact-btn:hover {
+        opacity: 0.8;
+    }
+    </style>
 </head>
 
 <body>
-    <!-- Header -->
+
     <header>
-        <div class="container header-container">
-            <div class="logo">JUELI <span>ENGINEERING</span></div>
-            <div class="mobile-menu">
-                <i class="fas fa-bars"></i>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003366;">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.php">JUELI <span>ENGINEERING</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.php">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shop.php">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="about.php">About Us</a></li>
-                    <li><a href="shop.php">Shop</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
-                </ul>
-            </nav>
-        </div>
+        </nav>
     </header>
+
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
@@ -136,6 +208,8 @@
             </div>
         </div>
     </footer>
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

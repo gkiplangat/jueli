@@ -3,30 +3,20 @@
 session_start();
 require_once 'admin/config.php';
 
-// Initialize variables
+// Fetch categories from database
 $categories = [];
-$featured_products = [];
-$error_message = '';
-$featured_error = '';
-
-// Fetch categories and products in a single database connection
 try {
-  // Fetch categories
-  $query = "SELECT * FROM product_categories";
-  $stmt = $conn->query($query);
-  $categories = $stmt->fetch_all(MYSQLI_ASSOC);
-
-  // Fetch featured products
-  $query = "SELECT * FROM featured_products";
-  $stmt = $conn->query($query);
-  $featured_products = $stmt->fetch_all(MYSQLI_ASSOC);
-
-  $conn->close();
+    $query = "SELECT * FROM product_categories";
+    $stmt = $conn->query($query);
+    $categories = $stmt->fetch_all(MYSQLI_ASSOC);
 } catch (Exception $e) {
-  error_log("Database error: " . $e->getMessage());
-  $error_message = $featured_error = "We're experiencing technical difficulties. Please check back later.";
+    // Log error and display user-friendly message
+    error_log("Database error: " . $e->getMessage());
+    $error_message = "We're experiencing technical difficulties. Please check back later.";
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,6 +24,11 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JUELI ENGINEERING LTD - Engineering Solutions for a Sustainable Future</title>
+
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Your existing stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,21 +39,34 @@ try {
 
 <body>
     <!-- Header -->
+    <!-- Header -->
+
     <header>
-        <div class="container header-container">
-            <div class="logo">JUELI <span>ENGINEERING</span></div>
-            <div class="mobile-menu">
-                <i class="fas fa-bars"></i>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003366;">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.php">JUELI <span>ENGINEERING</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.php">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shop.php">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="about.php">About Us</a></li>
-                    <li><a href="shop.php">Shop</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
-                </ul>
-            </nav>
-        </div>
+        </nav>
     </header>
 
     <!-- Hero Slider -->
@@ -104,16 +112,16 @@ try {
                     <div class="category-card">
                         <div class="category-img">
                             <?php
-                  // Check multiple possible field names
-                  $imageField = isset($category['picture']) ? 'picture' : (isset($category['image']) ? 'image' : (isset($category['photo']) ? 'photo' : ''));
+                                    // Check multiple possible field names
+                                    $imageField = isset($category['picture']) ? 'picture' : (isset($category['image']) ? 'image' : (isset($category['photo']) ? 'photo' : ''));
 
-                  if (!empty($imageField) && !empty($category[$imageField])):
-                    $imagePath = $category[$imageField];
-                    // Add base path if needed
-                    if (!filter_var($imagePath, FILTER_VALIDATE_URL)) {
-                      $imagePath = 'uploads/' . $imagePath;
-                    }
-                  ?>
+                                    if (!empty($imageField) && !empty($category[$imageField])):
+                                        $imagePath = $category[$imageField];
+                                        // Add base path if needed
+                                        if (!filter_var($imagePath, FILTER_VALIDATE_URL)) {
+                                            $imagePath = 'uploads/' . $imagePath;
+                                        }
+                                    ?>
                             <img src="<?php echo htmlspecialchars($imagePath); ?>"
                                 alt="<?php echo htmlspecialchars($category['category_name']); ?>">
                             <?php else: ?>
@@ -142,17 +150,17 @@ try {
             <h2 class="section-title">Featured Products</h2>
 
             <?php
-      // Fetch featured products from database
-      $featured_products = [];
-      try {
-        $query = "SELECT * FROM featured_products";
-        $stmt = $conn->query($query);
-        $featured_products = $stmt->fetch_all(MYSQLI_ASSOC);
-      } catch (Exception $e) {
-        error_log("Database error: " . $e->getMessage());
-        $featured_error = "We're experiencing technical difficulties loading featured products.";
-      }
-      ?>
+            // Fetch featured products from database
+            $featured_products = [];
+            try {
+                $query = "SELECT * FROM featured_products";
+                $stmt = $conn->query($query);
+                $featured_products = $stmt->fetch_all(MYSQLI_ASSOC);
+            } catch (Exception $e) {
+                error_log("Database error: " . $e->getMessage());
+                $featured_error = "We're experiencing technical difficulties loading featured products.";
+            }
+            ?>
 
             <?php if (isset($featured_error)): ?>
             <div class="error-notice"><?php echo $featured_error; ?></div>
@@ -165,8 +173,8 @@ try {
                     <div class="category-card">
                         <div class="category-img">
                             <?php
-                  $imagePath = !empty($product['product_picture']) ? 'uploads/' . $product['product_picture'] : 'img/products/default.jpg';
-                  ?>
+                                    $imagePath = !empty($product['product_picture']) ? 'uploads/' . $product['product_picture'] : 'img/products/default.jpg';
+                                    ?>
                             <img src="<?php echo htmlspecialchars($imagePath); ?>"
                                 alt="<?php echo htmlspecialchars($product['product_name']); ?>">
                         </div>
@@ -399,25 +407,105 @@ try {
             </div>
         </div>
     </footer>
+    <!-- Add Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Your existing scripts -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // ... (keep your existing hero slider and mobile menu code) ...
+        // Your existing JavaScript code
+    });
+    </script>
+</body>
 
-        // Category Slider - Fixed Version
-        const slider = document.querySelector('.category-slider');
-        const prevBtn = document.querySelector('.slider-prev');
-        const nextBtn = document.querySelector('.slider-next');
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // ... (keep your existing hero slider and mobile menu code) ...
 
+    // Category Slider - Fixed Version
+    const slider = document.querySelector('.category-slider');
+    const prevBtn = document.querySelector('.slider-prev');
+    const nextBtn = document.querySelector('.slider-next');
+
+    if (slider && prevBtn && nextBtn) {
+        // Calculate slide width dynamically based on first slide
+        const firstSlide = slider.querySelector('.category-slide');
+        const slideWidth = firstSlide ? firstSlide.offsetWidth + 15 : 175; // 15px for gap
+
+        function updateButtons() {
+            // Show/hide buttons based on scroll position
+            prevBtn.classList.toggle('hidden', slider.scrollLeft <= 10);
+            nextBtn.classList.toggle('hidden',
+                slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 10);
+        }
+
+        function scrollToPosition(position) {
+            slider.scrollTo({
+                left: position,
+                behavior: 'smooth'
+            });
+        }
+
+        prevBtn.addEventListener('click', () => {
+            const newPos = slider.scrollLeft - (slideWidth * 3);
+            scrollToPosition(Math.max(newPos, 0));
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const newPos = slider.scrollLeft + (slideWidth * 3);
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+            scrollToPosition(Math.min(newPos, maxScroll));
+        });
+
+        // Update buttons on scroll and resize
+        slider.addEventListener('scroll', updateButtons);
+        window.addEventListener('resize', updateButtons);
+
+        // Initialize button states
+        updateButtons();
+
+        // Debugging logs
+        console.log('Slider initialized:', {
+            sliderWidth: slider.clientWidth,
+            scrollWidth: slider.scrollWidth,
+            slideWidth: slideWidth,
+            scrollLeft: slider.scrollLeft
+        });
+    } else {
+        console.error('Slider elements not found:', {
+            slider,
+            prevBtn,
+            nextBtn
+        });
+    }
+});
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all sliders on page
+    const sliders = [{
+            slider: document.querySelector('.category-slider'),
+            prevBtn: document.querySelector('#categorySlider .slider-prev'),
+            nextBtn: document.querySelector('#categorySlider .slider-next')
+        },
+        {
+            slider: document.querySelector('.featured-slider'),
+            prevBtn: document.querySelector('#featuredSlider .slider-prev'),
+            nextBtn: document.querySelector('#featuredSlider .slider-next')
+        }
+    ];
+
+    sliders.forEach(({
+        slider,
+        prevBtn,
+        nextBtn
+    }) => {
         if (slider && prevBtn && nextBtn) {
-            // Calculate slide width dynamically based on first slide
-            const firstSlide = slider.querySelector('.category-slide');
-            const slideWidth = firstSlide ? firstSlide.offsetWidth + 15 : 175; // 15px for gap
+            const firstSlide = slider.querySelector('.category-slide') || slider.querySelector(
+                '.featured-slide');
+            const slideWidth = firstSlide ? firstSlide.offsetWidth + 20 : 300; // 20px for gap
 
             function updateButtons() {
-                // Show/hide buttons based on scroll position
-                prevBtn.classList.toggle('hidden', slider.scrollLeft <= 10);
-                nextBtn.classList.toggle('hidden',
+                prevBtn.classList.toggle('disabled', slider.scrollLeft <= 10);
+                nextBtn.classList.toggle('disabled',
                     slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 10);
             }
 
@@ -439,83 +527,13 @@ try {
                 scrollToPosition(Math.min(newPos, maxScroll));
             });
 
-            // Update buttons on scroll and resize
             slider.addEventListener('scroll', updateButtons);
             window.addEventListener('resize', updateButtons);
-
-            // Initialize button states
             updateButtons();
-
-            // Debugging logs
-            console.log('Slider initialized:', {
-                sliderWidth: slider.clientWidth,
-                scrollWidth: slider.scrollWidth,
-                slideWidth: slideWidth,
-                scrollLeft: slider.scrollLeft
-            });
-        } else {
-            console.error('Slider elements not found:', {
-                slider,
-                prevBtn,
-                nextBtn
-            });
         }
     });
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize all sliders on page
-        const sliders = [{
-                slider: document.querySelector('.category-slider'),
-                prevBtn: document.querySelector('#categorySlider .slider-prev'),
-                nextBtn: document.querySelector('#categorySlider .slider-next')
-            },
-            {
-                slider: document.querySelector('.featured-slider'),
-                prevBtn: document.querySelector('#featuredSlider .slider-prev'),
-                nextBtn: document.querySelector('#featuredSlider .slider-next')
-            }
-        ];
-
-        sliders.forEach(({
-            slider,
-            prevBtn,
-            nextBtn
-        }) => {
-            if (slider && prevBtn && nextBtn) {
-                const firstSlide = slider.querySelector('.category-slide') || slider.querySelector(
-                    '.featured-slide');
-                const slideWidth = firstSlide ? firstSlide.offsetWidth + 20 : 300; // 20px for gap
-
-                function updateButtons() {
-                    prevBtn.classList.toggle('disabled', slider.scrollLeft <= 10);
-                    nextBtn.classList.toggle('disabled',
-                        slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 10);
-                }
-
-                function scrollToPosition(position) {
-                    slider.scrollTo({
-                        left: position,
-                        behavior: 'smooth'
-                    });
-                }
-
-                prevBtn.addEventListener('click', () => {
-                    const newPos = slider.scrollLeft - (slideWidth * 3);
-                    scrollToPosition(Math.max(newPos, 0));
-                });
-
-                nextBtn.addEventListener('click', () => {
-                    const newPos = slider.scrollLeft + (slideWidth * 3);
-                    const maxScroll = slider.scrollWidth - slider.clientWidth;
-                    scrollToPosition(Math.min(newPos, maxScroll));
-                });
-
-                slider.addEventListener('scroll', updateButtons);
-                window.addEventListener('resize', updateButtons);
-                updateButtons();
-            }
-        });
-    });
-    </script>
+});
+</script>
 </body>
 
 </html>

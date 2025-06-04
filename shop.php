@@ -1,3 +1,51 @@
+<?php
+// Start session and include config
+require_once 'admin/config.php';
+
+// Initialize variables
+$products = [];
+$categories = [];
+$error_message = '';
+$current_category = isset($_GET['category']) ? $_GET['category'] : 'all';
+
+try {
+    // Check connection
+    if ($conn->connect_error) {
+        throw new Exception("Connection failed: " . $conn->connect_error);
+    }
+
+    // Get categories
+    $category_query = "SELECT DISTINCT product_category FROM products";
+    $category_result = $conn->query($category_query);
+
+    if ($category_result === false) {
+        throw new Exception("Category query error: " . $conn->error);
+    }
+
+    $categories = $category_result->fetch_all(MYSQLI_ASSOC);
+
+    // Get products
+    if ($current_category === 'all') {
+        $product_query = "SELECT * FROM products";
+        $stmt = $conn->prepare($product_query);
+    } else {
+        $product_query = "SELECT * FROM products WHERE product_category = ?";
+        $stmt = $conn->prepare($product_query);
+        $stmt->bind_param('s', $current_category);
+    }
+
+    if (!$stmt->execute()) {
+        throw new Exception("Execute failed: " . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
+    $products = $result->fetch_all(MYSQLI_ASSOC);
+} catch (Exception $e) {
+    error_log("Error: " . $e->getMessage());
+    $error_message = "We're experiencing technical difficulties. Please check back later.";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,20 +69,31 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="container header-container">
-            <div class="logo">JUELI <span>ENGINEERING</span></div>
-            <div class="mobile-menu">
-                <i class="fas fa-bars"></i>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003366;">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.php">JUELI <span>ENGINEERING</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.php">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shop.php">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="about.php">About Us</a></li>
-                    <li><a href="shop.php">Shop</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
-                </ul>
-            </nav>
-        </div>
+        </nav>
     </header>
 
     <!-- Hero Section -->
@@ -51,18 +110,54 @@
         <div class="category-menu">
             <h3 class="mb-3">Product Categories</h3>
             <div class="d-flex flex-wrap">
-                <button class="btn btn-outline-primary category-btn active" data-category="all">All Products</button>
-                <button class="btn btn-outline-primary category-btn" data-category="steel">Steel Structures</button>
-                <button class="btn btn-outline-primary category-btn" data-category="hvac">HVAC Systems</button>
-                <button class="btn btn-outline-primary category-btn" data-category="plumbing">Plumbing & Piping</button>
-                <button class="btn btn-outline-primary category-btn" data-category="welding">Welding Supplies</button>
-                <button class="btn btn-outline-primary category-btn" data-category="lift">Lift Components</button>
+                <a href="shop.php?category=all"
+                    class="btn btn-outline-primary category-btn <?php echo $current_category === 'all' ? 'active' : ''; ?>">All
+                    Products</a>
+                <?php foreach ($categories as $category): ?>
+                <a href="shop.php?category=<?php echo urlencode($category['product_category']); ?>"
+                    class="btn btn-outline-primary category-btn <?php echo $current_category === $category['product_category'] ? 'active' : ''; ?>">
+                    <?php echo htmlspecialchars($category['product_category']); ?>
+                </a>
+                <?php endforeach; ?>
             </div>
         </div>
 
         <!-- Products Section -->
         <div class="row" id="products-container">
-            <!-- Products will be loaded here by JavaScript -->
+            <?php if (!empty($error_message)): ?>
+            <div class="alert alert-danger"><?php echo $error_message; ?></div>
+            <?php elseif (empty($products)): ?>
+            <div class="col-12">
+                <div class="alert alert-info">No products found in this category.</div>
+            </div>
+            <?php else: ?>
+            <?php foreach ($products as $product): ?>
+            <div class="col-md-4 mb-4">
+                <div class="card product-card h-100">
+                    <div class="product-img" style="height: 200px; overflow: hidden;">
+                        <?php
+                                $imagePath = !empty($product['product_picture']) ? 'uploads/' . $product['product_picture'] : 'img/products/default.jpg';
+                                ?>
+                        <img src="<?php echo htmlspecialchars($imagePath); ?>" class="card-img-top img-fluid h-100"
+                            alt="<?php echo htmlspecialchars($product['product_name']); ?>" style="object-fit: cover;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo htmlspecialchars($product['product_name']); ?></h5>
+                        <p class="card-text text-muted"><?php echo htmlspecialchars($product['product_category']); ?>
+                        </p>
+                        <button class="btn btn-primary view-details" data-bs-toggle="modal"
+                            data-bs-target="#productModal"
+                            data-name="<?php echo htmlspecialchars($product['product_name']); ?>"
+                            data-description="<?php echo htmlspecialchars($product['product_description'] ?? 'No description available'); ?>"
+                            data-image="<?php echo htmlspecialchars($imagePath); ?>"
+                            data-category="<?php echo htmlspecialchars($product['product_category']); ?>">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -81,6 +176,7 @@
                         </div>
                         <div class="col-md-6">
                             <h4 id="productModalName"></h4>
+                            <p class="text-muted" id="productModalCategory"></p>
                             <p id="productModalDescription"></p>
                             <div class="d-flex justify-content-between align-items-center mt-4">
                                 <a href="#" id="whatsappInquiry" class="btn btn-success">
@@ -155,65 +251,6 @@
 
     <!-- Custom JavaScript -->
     <script>
-    // Sample product data
-    const products = [{
-            id: 1,
-            name: "Industrial Steel Beams",
-            category: "steel",
-            description: "High-quality steel beams for industrial construction projects. Available in various sizes and specifications to meet your structural needs.",
-            image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-        },
-        {
-            id: 2,
-            name: "Commercial HVAC Unit",
-            category: "hvac",
-            description: "Energy-efficient commercial HVAC unit with advanced temperature control features. Ideal for medium to large commercial spaces.",
-            image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
-        },
-        {
-            id: 3,
-            name: "Industrial Piping System",
-            category: "plumbing",
-            description: "Durable piping system for industrial applications. Corrosion-resistant and built to withstand high pressure.",
-            image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
-        },
-        {
-            id: 4,
-            name: "MIG Welding Machine",
-            category: "welding",
-            description: "Professional MIG welding machine with adjustable settings for various metal thicknesses. Includes welding gun and accessories.",
-            image: "https://images.unsplash.com/photo-1597852074816-d933c7d2b988?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-        },
-        {
-            id: 5,
-            name: "Elevator Control Panel",
-            category: "lift",
-            description: "Advanced elevator control panel with safety features and smooth operation controls. Compatible with various lift systems.",
-            image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-        },
-        {
-            id: 6,
-            name: "Steel Fabrication Materials",
-            category: "steel",
-            description: "Premium quality steel sheets and rods for fabrication projects. Various grades available.",
-            image: "https://images.unsplash.com/photo-1581093057305-5e0a6d2383a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
-        },
-        {
-            id: 7,
-            name: "Residential HVAC System",
-            category: "hvac",
-            description: "Quiet and efficient residential HVAC system with smart thermostat compatibility.",
-            image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-        },
-        {
-            id: 8,
-            name: "Lift Motor Assembly",
-            category: "lift",
-            description: "High-performance lift motor assembly for smooth and reliable elevator operation.",
-            image: "https://images.unsplash.com/photo-1635070040851-7c8d1e1b3b1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-        }
-    ];
-
     // Function to display products
     function displayProducts(category = 'all') {
         const container = document.getElementById('products-container');
@@ -263,8 +300,7 @@
         });
     }
 
-    // Initialize with all products
-    displayProducts();
+
 
     // Category filter buttons
     document.querySelectorAll('.category-btn').forEach(button => {
@@ -273,6 +309,41 @@
             this.classList.add('active');
             const category = this.getAttribute('data-category');
             displayProducts(category);
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Product modal functionality
+        const productModal = document.getElementById('productModal');
+        if (productModal) {
+            productModal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const name = button.getAttribute('data-name');
+                const description = button.getAttribute('data-description');
+                const image = button.getAttribute('data-image');
+                const category = button.getAttribute('data-category');
+
+                document.getElementById('productModalTitle').textContent = name;
+                document.getElementById('productModalName').textContent = name;
+                document.getElementById('productModalCategory').textContent = category;
+                document.getElementById('productModalDescription').textContent = description;
+                document.getElementById('productModalImage').src = image;
+
+                // Set up WhatsApp inquiry link
+                const whatsappBtn = document.getElementById('whatsappInquiry');
+                const message =
+                    `Hello JUELI ENGINEERING, I'm interested in your ${name} (${category}) product. Could you please share the price and details?`;
+                whatsappBtn.href = `https://wa.me/254704553400?text=${encodeURIComponent(message)}`;
+            });
+        }
+
+        // Highlight active category button
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
     });
     </script>
