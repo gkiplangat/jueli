@@ -131,19 +131,35 @@ try {
                 <div class="alert alert-info">No products found in this category.</div>
             </div>
             <?php else: ?>
-            <?php foreach ($products as $product): ?>
-            <div class="col-md-4 mb-4">
+            <?php
+                // Pagination setup
+                $itemsPerPage = 12;
+                $totalItems = count($products);
+                $totalPages = ceil($totalItems / $itemsPerPage);
+                $currentPage = isset($_GET['page']) ? max(1, min($totalPages, (int)$_GET['page'])) : 1;
+                $offset = ($currentPage - 1) * $itemsPerPage;
+                $paginatedProducts = array_slice($products, $offset, $itemsPerPage);
+
+                foreach ($paginatedProducts as $product): ?>
+            <div class="col-md-3 mb-4">
                 <div class="card product-card h-100">
-                    <div class="product-img" style="height: 200px; overflow: hidden;">
+                    <div class="product-img"
+                        style="height: 150px; overflow: hidden; display: flex; justify-content: center; align-items: center; background: #f8f9fa;">
                         <?php
                                 $imagePath = !empty($product['product_picture']) ? 'uploads/' . $product['product_picture'] : 'img/products/default.jpg';
                                 ?>
-                        <img src="<?php echo htmlspecialchars($imagePath); ?>" class="card-img-top img-fluid h-100"
-                            alt="<?php echo htmlspecialchars($product['product_name']); ?>" style="object-fit: cover;">
+                        <img src="<?php echo htmlspecialchars($imagePath); ?>" class="img-fluid"
+                            alt="<?php echo htmlspecialchars($product['product_name']); ?>"
+                            style="max-height: 100%; max-width: 100%; object-fit: contain;">
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo htmlspecialchars($product['product_name']); ?></h5>
-                        <p class="card-text text-muted"><?php echo htmlspecialchars($product['product_category']); ?>
+                        <h5 class="card-title" style="color: #003366;">
+                            <?php echo htmlspecialchars($product['product_name']); ?></h5>
+                        <p class="card-text"><small
+                                class="text-muted"><?php echo htmlspecialchars($product['product_category']); ?></small>
+                        </p>
+                        <p class="card-text">
+                            <?php echo htmlspecialchars($product['product_description'] ?? 'No description available'); ?>
                         </p>
                         <button class="btn btn-primary view-details" data-bs-toggle="modal"
                             data-bs-target="#productModal"
@@ -159,6 +175,41 @@ try {
             <?php endforeach; ?>
             <?php endif; ?>
         </div>
+
+        <!-- Pagination -->
+        <?php if ($totalPages > 1): ?>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center mt-4">
+                <!-- Previous Page Link -->
+                <li class="page-item <?php echo $currentPage == 1 ? 'disabled' : ''; ?>">
+                    <a class="page-link"
+                        href="?category=<?php echo urlencode($current_category); ?>&page=<?php echo $currentPage - 1; ?>"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <!-- Page Numbers -->
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li class="page-item <?php echo $i == $currentPage ? 'active' : ''; ?>">
+                    <a class="page-link"
+                        href="?category=<?php echo urlencode($current_category); ?>&page=<?php echo $i; ?>">
+                        <?php echo $i; ?>
+                    </a>
+                </li>
+                <?php endfor; ?>
+
+                <!-- Next Page Link -->
+                <li class="page-item <?php echo $currentPage == $totalPages ? 'disabled' : ''; ?>">
+                    <a class="page-link"
+                        href="?category=<?php echo urlencode($current_category); ?>&page=<?php echo $currentPage + 1; ?>"
+                        aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <?php endif; ?>
     </div>
 
     <!-- Product Modal -->
@@ -172,10 +223,11 @@ try {
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <img src="" id="productModalImage" class="img-fluid rounded" alt="Product Image">
+                            <img src="" id="productModalImage" class="img-fluid rounded" alt="Product Image"
+                                style="max-height: 400px; object-fit: contain;">
                         </div>
                         <div class="col-md-6">
-                            <h4 id="productModalName"></h4>
+                            <h4 id="productModalName" style="color: #003366;"></h4>
                             <p class="text-muted" id="productModalCategory"></p>
                             <p id="productModalDescription"></p>
                             <div class="d-flex justify-content-between align-items-center mt-4">

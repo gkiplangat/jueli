@@ -13,7 +13,9 @@ try {
     // Log error and display user-friendly message
     error_log("Database error: " . $e->getMessage());
     $error_message = "We're experiencing technical difficulties. Please check back later.";
+    
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +40,6 @@ try {
 </head>
 
 <body>
-    <!-- Header -->
     <!-- Header -->
 
     <header>
@@ -102,15 +103,16 @@ try {
             <h2 class="section-title">Our Product Categories</h2>
 
             <?php if (isset($error_message)): ?>
-            <div class="error-notice"><?php echo $error_message; ?></div>
+            <div class="alert alert-danger"><?php echo $error_message; ?></div>
             <?php elseif (empty($categories)): ?>
-            <div class="notice">No product categories found.</div>
+            <div class="alert alert-info">No product categories found.</div>
             <?php else: ?>
             <div class="category-slider">
                 <?php foreach ($categories as $category): ?>
                 <div class="category-slide">
                     <div class="category-card">
-                        <div class="category-img">
+                        <div class="category-img"
+                            style="height: 150px; overflow: hidden; display: flex; justify-content: center; align-items: center; background: #f8f9fa;">
                             <?php
                                     // Check multiple possible field names
                                     $imageField = isset($category['picture']) ? 'picture' : (isset($category['image']) ? 'image' : (isset($category['photo']) ? 'photo' : ''));
@@ -123,13 +125,16 @@ try {
                                         }
                                     ?>
                             <img src="<?php echo htmlspecialchars($imagePath); ?>"
-                                alt="<?php echo htmlspecialchars($category['category_name']); ?>">
+                                alt="<?php echo htmlspecialchars($category['category_name']); ?>"
+                                style="max-height: 100%; max-width: 100%; object-fit: contain; padding: 10px;">
                             <?php else: ?>
                             <img src="uploads/default.jpg"
-                                alt="<?php echo htmlspecialchars($category['category_name']); ?>">
+                                alt="<?php echo htmlspecialchars($category['category_name']); ?>"
+                                style="max-height: 100%; max-width: 100%; object-fit: contain; padding: 10px;">
                             <?php endif; ?>
                         </div>
-                        <h3><?php echo htmlspecialchars($category['category_name']); ?></h3>
+                        <h3 style="color: #003366; margin-top: 10px;">
+                            <?php echo htmlspecialchars($category['category_name']); ?></h3>
                     </div>
                 </div>
                 <?php endforeach; ?>
@@ -163,23 +168,25 @@ try {
             ?>
 
             <?php if (isset($featured_error)): ?>
-            <div class="error-notice"><?php echo $featured_error; ?></div>
+            <div class="alert alert-danger"><?php echo $featured_error; ?></div>
             <?php elseif (empty($featured_products)): ?>
-            <div class="notice">No featured products found.</div>
+            <div class="alert alert-info">No featured products found.</div>
             <?php else: ?>
             <div class="category-slider">
                 <?php foreach ($featured_products as $product): ?>
                 <div class="category-slide">
                     <div class="category-card">
-                        <div class="category-img">
+                        <div class="category-img"
+                            style="height: 180px; overflow: hidden; display: flex; justify-content: center; align-items: center; background: #f8f9fa;">
                             <?php
                                     $imagePath = !empty($product['product_picture']) ? 'uploads/' . $product['product_picture'] : 'img/products/default.jpg';
                                     ?>
                             <img src="<?php echo htmlspecialchars($imagePath); ?>"
-                                alt="<?php echo htmlspecialchars($product['product_name']); ?>">
+                                alt="<?php echo htmlspecialchars($product['product_name']); ?>"
+                                style="max-height: 100%; max-width: 100%; object-fit: contain; padding: 10px;">
                         </div>
                         <div class="product-info">
-                            <h3><?php echo htmlspecialchars($product['product_name']); ?></h3>
+                            <h3 style="color: #003366;"><?php echo htmlspecialchars($product['product_name']); ?></h3>
                             <p class="product-description">
                                 <?php echo htmlspecialchars($product['product_description']); ?></p>
                             <div class="price-contact">
