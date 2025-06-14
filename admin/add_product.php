@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_category = mysqli_real_escape_string($conn, $_POST['product_category']);
     $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
     $product_description = mysqli_real_escape_string($conn, $_POST['product_description']);
-    
+
     // Handle file uploads
     $product_picture = uniqid() . '_' . $_FILES['product_picture']['name'];
     $upload_dir = '../uploads/'; // Directory to store uploaded files
@@ -18,14 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         mkdir($upload_dir, 0755, true);
     }
 
-    // Validate file type and size
-    $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
-    if (!in_array($_FILES['product_picture']['type'], $allowed_types)) {
-        echo "<script>alert('Invalid file type. Only JPG, PNG, and GIF are allowed.'); window.location.href = 'news.php';</script>";
-        exit();
-    }
-
-    if ($_FILES['product_picture']['size'] > 5 * 1024 * 1024) { // Limit to 5MB
+    // Validate file size only (5MB limit)
+    if ($_FILES['product_picture']['size'] > 5 * 1024 * 1024) {
         echo "<script>alert('File size exceeds the limit of 5MB.'); window.location.href = 'news.php';</script>";
         exit();
     }
@@ -38,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Insert data into the database
-    $sql = "INSERT INTO products (product_category, product_name, product_description,  product_picture) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO products (product_category, product_name, product_description, product_picture) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if ($stmt) {

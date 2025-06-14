@@ -41,11 +41,10 @@ try {
 
 <body>
     <!-- Header -->
-
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003366;">
             <div class="container">
-                <a class="navbar-brand logo" href="index.php">JUELI <span>ENGINEERING</span></a>
+                <a class="navbar-brand logo" href="index.php">JUELI <span>ENGINEERING</span> LTD</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
