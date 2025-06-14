@@ -156,7 +156,7 @@
         <!--Categories-->
 
         <div class="row mb-3">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="card">
                     <!-- Check for success or error flags -->
                     <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'category'): ?>

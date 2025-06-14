@@ -1,77 +1,72 @@
 <?php
-// Include the database configuration file
 include 'config.php';
 
-// SQL query to fetch data from the 'events' table
-$sql = "SELECT id, product_category, product_name, product_description, product_picture FROM products";
+// Get current page from URL or default to 1
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$limit = 10;
+$offset = ($page - 1) * $limit;
 
-// Execute the query
+// Get category filter if set
+$category_filter = isset($_GET['category_filter']) ? $_GET['category_filter'] : '';
+
+// Base SQL query
+$sql = "SELECT * FROM products";
+
+// Add WHERE clause if category filter is set
+if (!empty($category_filter)) {
+    $sql .= " WHERE product_category = '" . $conn->real_escape_string($category_filter) . "'";
+}
+
+// Add pagination
+$sql .= " LIMIT $limit OFFSET $offset";
+
 $result = $conn->query($sql);
 
-// Check if there are results
 if ($result->num_rows > 0) {
-    // Output data for each row
     while ($row = $result->fetch_assoc()) {
-        $id = $row['id'];
-        $product_category = htmlspecialchars($row['product_category']);
-        $product_name = htmlspecialchars($row['product_name']);
-        $product_description = htmlspecialchars($row['product_description']);
-        
-
-        $product_picture = htmlspecialchars($row['product_picture']);
-
         echo "<tr>";
-        echo "<td><img src='../uploads/$product_picture' alt='Product Picture' width='100' height='100'></td>";
-        echo "<td>$product_category</td>";
-        echo "<td>$product_name</td>";
-        echo "<td>$product_description</td>";
-        
+        echo "<td><img src='../uploads/" . htmlspecialchars($row['product_picture']) . "' alt='Product' class='img-thumbnail' width='50' height='50'></td>";
+        echo "<td>" . htmlspecialchars($row['product_category']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['product_name']) . "</td>";
+        echo "<td>" . htmlspecialchars(substr($row['product_description'], 0, 50)) . "...</td>";
         echo "<td>
-                <button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#editModal$id'>Edit</button>
-                <button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#deleteModal$id'>Delete</button>
+                <button class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#editModal" . $row['id'] . "'>Edit</button>
+                <button class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal" . $row['id'] . "'>Delete</button>
               </td>";
         echo "</tr>";
 
         // Edit Modal
         echo "
-        <div class='modal fade' id='editModal$id' tabindex='-1' aria-labelledby='editModalLabel$id' aria-hidden='true'>
+        <div class='modal fade' id='editModal" . $row['id'] . "' tabindex='-1' aria-labelledby='editModalLabel' aria-hidden='true'>
             <div class='modal-dialog'>
                 <div class='modal-content'>
                     <div class='modal-header'>
-                        <h5 class='modal-title text-light' id='editModalLabel$id'>Edit Product</h5>
+                        <h5 class='modal-title text-white'>Edit Product</h5>
                         <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                     </div>
                     <div class='modal-body'>
-                        <form action='actions/edit_products.php' method='POST' enctype='multipart/form-data'>
-                            <!-- Hidden input for ID -->
-                            <input type='hidden' name='id' value='$id'>
-                            
-                            <!-- Product Category -->
+                        <form action='actions/update_product.php' method='POST' enctype='multipart/form-data'>
+                            <input type='hidden' name='id' value='" . $row['id'] . "'>
                             <div class='mb-3'>
-                                <label for='product_category$id' class='form-label'>Product_category</label>
-                                <input type='text' class='form-control' id='product_categoryc$id' name='product_category' value='$product_category' required>
+                                <label class='form-label'>Product Picture</label>
+                                <input type='file' class='form-control' name='product_picture' accept='image/*'>
                             </div>
-                            
-                            <!-- Product Name -->
                             <div class='mb-3'>
-                                <label for='product_name$id' class='form-label'>Product Name</label>
-                                <input type='text' class='form-control' id='product_name$id' name='product_name' value='$product_name' required>
+                                <label class='form-label'>Product Category</label>
+                                <input type='text' class='form-control' name='product_category' value='" . htmlspecialchars($row['product_category']) . "' required>
                             </div>
-                            
-                            <!-- Product Description -->
                             <div class='mb-3'>
-                                <label for='product_description$id' class='form-label'>Product Description</label>
-                                <textarea class='form-control' id='product_description$id' name='product_description' rows='3' required>$product_description</textarea>
+                                <label class='form-label'>Product Name</label>
+                                <input type='text' class='form-control' name='product_name' value='" . htmlspecialchars($row['product_name']) . "' required>
                             </div>
-                            
-                            <!-- Product Picture -->
                             <div class='mb-3'>
-                                <label for='product_picture$id' class='form-label'>Product Picture</label>
-                                <input type='file' class='form-control' id='product_picture$id' name='product_picture'>
-                                <img src='../uploads/$product_picture' alt='Current Photo' width='100' height='100' class='mt-2'>
+                                <label class='form-label'>Product Description</label>
+                                <textarea class='form-control' name='product_description' required>" . htmlspecialchars($row['product_description']) . "</textarea>
                             </div>
-                            
-                            <button type='submit' class='btn btn-primary'>Save Changes</button>
+                            <div class='modal-footer'>
+                                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
+                                <button type='submit' class='btn btn-primary'>Save Changes</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -80,27 +75,26 @@ if ($result->num_rows > 0) {
 
         // Delete Modal
         echo "
-        <div class='modal fade' id='deleteModal$id' tabindex='-1' aria-labelledby='deleteModalLabel$id' aria-hidden='true'>
+        <div class='modal fade' id='deleteModal" . $row['id'] . "' tabindex='-1' aria-labelledby='deleteModalLabel' aria-hidden='true'>
             <div class='modal-dialog'>
                 <div class='modal-content'>
                     <div class='modal-header'>
-                        <h5 class='modal-title text-light' id='deleteModalLabel$id'>Confirm Delete</h5>
+                        <h5 class='modal-title text-white'>Delete Product</h5>
                         <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                     </div>
                     <div class='modal-body'>
-                        Are you sure you want to delete the event <strong>$product_name</strong>?
+                        <p>Are you sure you want to delete <strong>" . htmlspecialchars($row['product_name']) . "</strong>?</p>
                     </div>
                     <div class='modal-footer'>
                         <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
-                        <a href='actions/delete_products.php?id=$id' class='btn btn-danger'>Delete</a>
+                        <a href='actions/delete_product.php?id=" . $row['id'] . "' class='btn btn-danger'>Delete</a>
                     </div>
                 </div>
             </div>
         </div>";
     }
 } else {
-    echo "<tr><td colspan='7' class='text-center'>No events data found</td></tr>";
+    echo "<tr><td colspan='5' class='text-center'>No products found</td></tr>";
 }
 
-// Close the database connection
 $conn->close();
