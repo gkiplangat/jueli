@@ -377,11 +377,10 @@ try {
                     <div class="footer-col">
                         <h3>Quick Links</h3>
                         <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="shop.html">Shop</a></li>
+                            <li><a href="index.php">Home</a></li>
+                            <li><a href="shop.php">Shop</a></li>
                             <li><a href="#contact">Contact Us</a></li>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Services</a></li>
+                            <li><a href="about.php">About Us</a></li>
                         </ul>
                     </div>
                     <div class="footer-col">
