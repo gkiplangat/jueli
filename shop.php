@@ -282,7 +282,7 @@ try {
                     <ul>
                         <li><i class="fas fa-map-marker-alt"></i> Nairobi Industrial Area, Kenya</li>
                         <li><i class="fas fa-phone-alt"></i> +254 704 553 400</li>
-                        <li><i class="fas fa-envelope"></i> muchuieliud04@gmail.com</li>
+                        <li><i class="fas fa-envelope"></i>info@jueliengineeringltd.co.ke</li>
                     </ul>
                 </div>
             </div>

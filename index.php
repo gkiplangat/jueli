@@ -13,7 +13,6 @@ try {
     // Log error and display user-friendly message
     error_log("Database error: " . $e->getMessage());
     $error_message = "We're experiencing technical difficulties. Please check back later.";
-    
 }
 
 ?>
@@ -337,7 +336,7 @@ try {
                             <i class="fas fa-envelope"></i>
                             <div>
                                 <p><strong>Email:</strong></p>
-                                <p>muchuieliud04@gmail.com</p>
+                                <p>info@jueliengineeringltd.co.ke</p>
                             </div>
                         </div>
                         <div class="contact-item">
@@ -404,7 +403,7 @@ try {
                     <ul>
                         <li><i class="fas fa-map-marker-alt"></i> Nairobi Industrial Area, Kenya</li>
                         <li><i class="fas fa-phone-alt"></i> +254 704 553 400</li>
-                        <li><i class="fas fa-envelope"></i> muchuieliud04@gmail.com</li>
+                        <li><i class="fas fa-envelope"></i>info@jueliengineeringltd.co.ke</li>
                     </ul>
                 </div>
             </div>
