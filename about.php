@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JUELI ENGINEERING LTD</title>
+    <title>Jueli Engineering Ltd</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -78,7 +78,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003366;">
             <div class="container">
-                <a class="navbar-brand logo" href="index.php">JUELI <span>ENGINEERING</span></a>
+                <a class="navbar-brand logo" href="index.php">JUELI <span>ENGINEERING LTD</span></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -89,7 +89,7 @@
                             <a class="nav-link active" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about.php">About Us</a>
+                            <a class="nav-link" aria-current="page" href="about.php">About Us</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="shop.php">Shop</a>
@@ -164,7 +164,7 @@
         <div class="container">
             <div class="footer-container">
                 <div class="footer-col">
-                    <h3>JUELI ENGINEERING</h3>
+                    <h3>JUELI ENGINEERING LTD</h3>
                     <p>Engineering Solutions for a Sustainable Future. Providing innovative, cost-efficient, and
                         high-quality engineering services across multiple sectors.</p>
                     <div class="social-links">
@@ -199,7 +199,7 @@
                     <ul>
                         <li><i class="fas fa-map-marker-alt"></i> Nairobi Industrial Area, Kenya</li>
                         <li><i class="fas fa-phone-alt"></i> +254 704 553 400</li>
-                        <li><i class="fas fa-envelope"></i> info@jueliengineeringltd.co.ke</li>
+                        <li><i class="fas fa-envelope"></i>info@jueliengineeringltd.co.ke</li>
                     </ul>
                 </div>
             </div>

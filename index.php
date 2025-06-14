@@ -14,7 +14,6 @@ try {
     error_log("Database error: " . $e->getMessage());
     $error_message = "We're experiencing technical difficulties. Please check back later.";
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +23,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JUELI ENGINEERING LTD - Engineering Solutions for a Sustainable Future</title>
+    <title>Jueli Engineering Ltd</title>
 
     <!-- Add Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -40,10 +39,12 @@ try {
 
 <body>
     <!-- Header -->
+    <!-- Header -->
+
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003366;">
             <div class="container">
-                <a class="navbar-brand logo" href="index.php">JUELI <span>ENGINEERING</span> LTD</a>
+                <a class="navbar-brand logo" href="index.php">JUELI <span>ENGINEERING LTD</span></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -144,149 +145,144 @@ try {
             </div>
             <?php endif; ?>
         </div>
-    </section>
+        <!-- Featured Products Slider - Matching Categories Style -->
+        <section class="category-slider-section" id="featuredSlider">
+            <div class="container">
+                <h2 class="section-title">Featured Products</h2>
 
-    <!-- Rest of your existing code -->
-    <!-- Featured Products Slider - Matching Categories Style -->
-    <section class="category-slider-section" id="featuredSlider">
-        <div class="container">
-            <h2 class="section-title">Featured Products</h2>
+                <?php
+                // Fetch featured products from database
+                $featured_products = [];
+                try {
+                    $query = "SELECT * FROM featured_products";
+                    $stmt = $conn->query($query);
+                    $featured_products = $stmt->fetch_all(MYSQLI_ASSOC);
+                } catch (Exception $e) {
+                    error_log("Database error: " . $e->getMessage());
+                    $featured_error = "We're experiencing technical difficulties loading featured products.";
+                }
+                ?>
 
-            <?php
-            // Fetch featured products from database
-            $featured_products = [];
-            try {
-                $query = "SELECT * FROM featured_products";
-                $stmt = $conn->query($query);
-                $featured_products = $stmt->fetch_all(MYSQLI_ASSOC);
-            } catch (Exception $e) {
-                error_log("Database error: " . $e->getMessage());
-                $featured_error = "We're experiencing technical difficulties loading featured products.";
-            }
-            ?>
-
-            <?php if (isset($featured_error)): ?>
-            <div class="alert alert-danger"><?php echo $featured_error; ?></div>
-            <?php elseif (empty($featured_products)): ?>
-            <div class="alert alert-info">No featured products found.</div>
-            <?php else: ?>
-            <div class="category-slider">
-                <?php foreach ($featured_products as $product): ?>
-                <div class="category-slide">
-                    <div class="category-card">
-                        <div class="category-img"
-                            style="height: 180px; overflow: hidden; display: flex; justify-content: center; align-items: center; background: #f8f9fa;">
-                            <?php
-                                    $imagePath = !empty($product['product_picture']) ? 'uploads/' . $product['product_picture'] : 'img/products/default.jpg';
-                                    ?>
-                            <img src="<?php echo htmlspecialchars($imagePath); ?>"
-                                alt="<?php echo htmlspecialchars($product['product_name']); ?>"
-                                style="max-height: 100%; max-width: 100%; object-fit: contain; padding: 10px;">
-                        </div>
-                        <div class="product-info">
-                            <h3 style="color: #003366;"><?php echo htmlspecialchars($product['product_name']); ?></h3>
-                            <p class="product-description">
-                                <?php echo htmlspecialchars($product['product_description']); ?></p>
-                            <div class="price-contact">
-                                <a href="https://wa.me/254704553400?text=Hello%20JUELI%20ENGINEERING,%20I'm%20interested%20in%20your%20<?php echo urlencode($product['product_name']); ?>%20product.%20Could%20you%20please%20share%20the%20price%20and%20details?"
-                                    class="whatsapp-btn" style="background:#003366;" target="_blank">
-                                    <i class="fab fa-whatsapp"></i> Ask for Price
-                                </a>
+                <?php if (isset($featured_error)): ?>
+                <div class="error-notice"><?php echo $featured_error; ?></div>
+                <?php elseif (empty($featured_products)): ?>
+                <div class="notice">No featured products found.</div>
+                <?php else: ?>
+                <div class="category-slider">
+                    <?php foreach ($featured_products as $product): ?>
+                    <div class="category-slide">
+                        <div class="category-card">
+                            <div class="category-img">
+                                <?php
+                                        $imagePath = !empty($product['product_picture']) ? 'uploads/' . $product['product_picture'] : 'img/products/default.jpg';
+                                        ?>
+                                <img src="<?php echo htmlspecialchars($imagePath); ?>"
+                                    alt="<?php echo htmlspecialchars($product['product_name']); ?>">
+                            </div>
+                            <div class="product-info">
+                                <h3><?php echo htmlspecialchars($product['product_name']); ?></h3>
+                                <p class="product-description">
+                                    <?php echo htmlspecialchars($product['product_description']); ?></p>
+                                <div class="price-contact">
+                                    <a href="https://wa.me/254704553400?text=Hello%20JUELI%20ENGINEERING,%20I'm%20interested%20in%20your%20<?php echo urlencode($product['product_name']); ?>%20product.%20Could%20you%20please%20share%20the%20price%20and%20details?"
+                                        class="whatsapp-btn" style="background:#003366;" target="_blank">
+                                        <i class="fab fa-whatsapp"></i> Ask for Price
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
+
+                <div class="slider-nav">
+                    <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <?php endif; ?>
             </div>
-
-            <div class="slider-nav">
-                <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
-                <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
-            </div>
-            <?php endif; ?>
-        </div>
-    </section>
+        </section>
 
 
 
-    <!-- Our Services -->
-    <section class="services-section">
-        <div class="container">
-            <h2 class="section-title">Our Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-cogs"></i>
+        <!-- Our Services -->
+        <section class="services-section">
+            <div class="container">
+                <h2 class="section-title">Our Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="service-info">
+                            <h3>Mechanical Services</h3>
+                            <p>Design, installation, and ongoing maintenance of mechanical systems for various
+                                applications.
+                            </p>
+                        </div>
                     </div>
-                    <div class="service-info">
-                        <h3>Mechanical Services</h3>
-                        <p>Design, installation, and ongoing maintenance of mechanical systems for various
-                            applications.
-                        </p>
-                    </div>
-                </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-building"></i>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="service-info">
+                            <h3>Steel Structure Design & Fabrication</h3>
+                            <p>Providing top-quality steel structures tailored for residential, commercial, and
+                                industrial
+                                applications.</p>
+                        </div>
                     </div>
-                    <div class="service-info">
-                        <h3>Steel Structure Design & Fabrication</h3>
-                        <p>Providing top-quality steel structures tailored for residential, commercial, and
-                            industrial
-                            applications.</p>
-                    </div>
-                </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-wind"></i>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <div class="service-info">
+                            <h3>HVAC Systems</h3>
+                            <p>Delivering energy-efficient heating, ventilation, and air conditioning systems for all
+                                building types.</p>
+                        </div>
                     </div>
-                    <div class="service-info">
-                        <h3>HVAC Systems</h3>
-                        <p>Delivering energy-efficient heating, ventilation, and air conditioning systems for all
-                            building types.</p>
-                    </div>
-                </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-tint"></i>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="service-info">
+                            <h3>Plumbing & Piping Solutions</h3>
+                            <p>Comprehensive installation and maintenance of plumbing and piping systems for water, gas,
+                                and
+                                waste.</p>
+                        </div>
                     </div>
-                    <div class="service-info">
-                        <h3>Plumbing & Piping Solutions</h3>
-                        <p>Comprehensive installation and maintenance of plumbing and piping systems for water, gas,
-                            and
-                            waste.</p>
-                    </div>
-                </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-fire"></i>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="service-info">
+                            <h3>Welding & MIG Fabrication</h3>
+                            <p>Specializing in precision welding for construction and heavy-duty applications.</p>
+                        </div>
                     </div>
-                    <div class="service-info">
-                        <h3>Welding & MIG Fabrication</h3>
-                        <p>Specializing in precision welding for construction and heavy-duty applications.</p>
-                    </div>
-                </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-elevator"></i>
-                    </div>
-                    <div class="service-info">
-                        <h3>Lift Installation Services</h3>
-                        <p>Complete lift design, installation, and maintenance for residential and commercial
-                            buildings.
-                        </p>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-elevator"></i>
+                        </div>
+                        <div class="service-info">
+                            <h3>Lift Installation Services</h3>
+                            <p>Complete lift design, installation, and maintenance for residential and commercial
+                                buildings.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Our Partners 
+        <!-- Our Partners 
     <section class="partners-section">
         <div class="container">
             <h2 class="section-title">Our Partners</h2>
@@ -310,117 +306,117 @@ try {
         </div>
     </section>-->
 
-    <!-- Contact Us -->
-    <section class="contact-section" id="contact">
-        <div class="container">
-            <h2 class="section-title">Contact Us</h2>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>Get in Touch</h3>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <p><strong>Address:</strong></p>
-                                <p>15976-00100, Nairobi Industrial Area, Kenya</p>
+        <!-- Contact Us -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <h2 class="section-title">Contact Us</h2>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3>Get in Touch</h3>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <p><strong>Address:</strong></p>
+                                    <p>15976-00100, Nairobi Industrial Area, Kenya</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone-alt"></i>
-                            <div>
-                                <p><strong>Phone:</strong></p>
-                                <p>+254 704 553 400</p>
+                            <div class="contact-item">
+                                <i class="fas fa-phone-alt"></i>
+                                <div>
+                                    <p><strong>Phone:</strong></p>
+                                    <p>+254 704 553 400</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <p><strong>Email:</strong></p>
-                                <p>info@jueliengineeringltd.co.ke</p>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <p><strong>Email:</strong></p>
+                                    <p>info@jueliengineeringltd.co.ke</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-clock"></i>
-                            <div>
-                                <p><strong>Working Hours:</strong></p>
-                                <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
-                                <p>Saturday: 9:00 AM - 1:00 PM</p>
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <p><strong>Working Hours:</strong></p>
+                                    <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
+                                    <p>Saturday: 9:00 AM - 1:00 PM</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="contact-form">
-                    <h3>Send Us a Message</h3>
-                    <form>
-                        <input type="text" placeholder="Your Name" required>
-                        <input type="email" placeholder="Your Email" required>
-                        <input type="text" placeholder="Subject">
-                        <textarea placeholder="Your Message" required></textarea>
-                        <button type="submit" class="btn">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-container">
-                <div class="footer-col">
-                    <h3>JUELI ENGINEERING</h3>
-                    <p>Engineering Solutions for a Sustainable Future. Providing innovative, cost-efficient, and
-                        high-quality engineering services across multiple sectors.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    <div class="contact-form">
+                        <h3>Send Us a Message</h3>
+                        <form>
+                            <input type="text" placeholder="Your Name" required>
+                            <input type="email" placeholder="Your Email" required>
+                            <input type="text" placeholder="Subject">
+                            <textarea placeholder="Your Message" required></textarea>
+                            <button type="submit" class="btn">Send Message</button>
+                        </form>
                     </div>
                 </div>
-                <div class="footer-col">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="shop.html">Shop</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Services</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Our Services</h3>
-                    <ul>
-                        <li><a href="#">Mechanical Services</a></li>
-                        <li><a href="#">Steel Fabrication</a></li>
-                        <li><a href="#">HVAC Systems</a></li>
-                        <li><a href="#">Plumbing & Piping</a></li>
-                        <li><a href="#">Lift Installation</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Contact Info</h3>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> Nairobi Industrial Area, Kenya</li>
-                        <li><i class="fas fa-phone-alt"></i> +254 704 553 400</li>
-                        <li><i class="fas fa-envelope"></i>info@jueliengineeringltd.co.ke</li>
-                    </ul>
-                </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2024 JUELI ENGINEERING LTD. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
-    <!-- Add Bootstrap JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </section>
 
-    <!-- Your existing scripts -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Your existing JavaScript code
-    });
-    </script>
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-container">
+                    <div class="footer-col">
+                        <h3>JUELI ENGINEERING LTD</h3>
+                        <p>Engineering Solutions for a Sustainable Future. Providing innovative, cost-efficient, and
+                            high-quality engineering services across multiple sectors.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="shop.html">Shop</a></li>
+                            <li><a href="#contact">Contact Us</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Services</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Our Services</h3>
+                        <ul>
+                            <li><a href="#">Mechanical Services</a></li>
+                            <li><a href="#">Steel Fabrication</a></li>
+                            <li><a href="#">HVAC Systems</a></li>
+                            <li><a href="#">Plumbing & Piping</a></li>
+                            <li><a href="#">Lift Installation</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Contact Info</h3>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt"></i> Nairobi Industrial Area, Kenya</li>
+                            <li><i class="fas fa-phone-alt"></i> +254 704 553 400</li>
+                            <li><i class="fas fa-envelope"></i>info@jueliengineeringltd.co.ke</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2024 JUELI ENGINEERING LTD. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+        <!-- Add Bootstrap JS Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Your existing scripts -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Your existing JavaScript code
+        });
+        </script>
 </body>
 
 <script>
