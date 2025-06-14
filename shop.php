@@ -106,19 +106,25 @@ try {
 
     <!-- Main Content -->
     <div class="container my-5">
-        <!-- Category Menu -->
-        <div class="category-menu">
-            <h3 class="mb-3">Product Categories</h3>
-            <div class="d-flex flex-wrap">
-                <a href="shop.php?category=all"
-                    class="btn btn-outline-primary category-btn <?php echo $current_category === 'all' ? 'active' : ''; ?>">All
-                    Products</a>
-                <?php foreach ($categories as $category): ?>
-                <a href="shop.php?category=<?php echo urlencode($category['product_category']); ?>"
-                    class="btn btn-outline-primary category-btn <?php echo $current_category === $category['product_category'] ? 'active' : ''; ?>">
-                    <?php echo htmlspecialchars($category['product_category']); ?>
-                </a>
-                <?php endforeach; ?>
+        <!-- Category Dropdown -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="categoryDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <?php echo $current_category === 'all' ? 'All Products' : htmlspecialchars($current_category); ?>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                        <li><a class="dropdown-item <?php echo $current_category === 'all' ? 'active' : ''; ?>"
+                                href="shop.php?category=all&page=1">All Products</a></li>
+                        <?php foreach ($categories as $category): ?>
+                        <li><a class="dropdown-item <?php echo $current_category === $category['product_category'] ? 'active' : ''; ?>"
+                                href="shop.php?category=<?php echo urlencode($category['product_category']); ?>&page=1">
+                                <?php echo htmlspecialchars($category['product_category']); ?>
+                            </a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -303,67 +309,6 @@ try {
 
     <!-- Custom JavaScript -->
     <script>
-    // Function to display products
-    function displayProducts(category = 'all') {
-        const container = document.getElementById('products-container');
-        container.innerHTML = '';
-
-        const filteredProducts = category === 'all' ?
-            products :
-            products.filter(product => product.category === category);
-
-        filteredProducts.forEach(product => {
-            const col = document.createElement('div');
-            col.className = 'col-md-6 col-lg-4 col-xl-3';
-
-            col.innerHTML = `
-                    <div class="card product-card">
-                        <img src="${product.image}" class="card-img-top product-img" alt="${product.name}">
-                        <div class="card-body">
-                            <h5 class="card-title">${product.name}</h5>
-                            <p class="card-text">${product.description.substring(0, 100)}...</p>
-                            <button class="btn btn-primary view-details" data-id="${product.id}">View Details</button>
-                        </div>
-                    </div>
-                `;
-
-            container.appendChild(col);
-        });
-
-        // Add event listeners to view details buttons
-        document.querySelectorAll('.view-details').forEach(button => {
-            button.addEventListener('click', function() {
-                const productId = parseInt(this.getAttribute('data-id'));
-                const product = products.find(p => p.id === productId);
-
-                if (product) {
-                    document.getElementById('productModalTitle').textContent = product.name;
-                    document.getElementById('productModalName').textContent = product.name;
-                    document.getElementById('productModalDescription').textContent = product
-                        .description;
-                    document.getElementById('productModalImage').src = product.image;
-                    document.getElementById('whatsappInquiry').href =
-                        `https://wa.me/254704553400?text=Hello%20JUELI%20ENGINEERING%20LTD,%20I%20am%20interested%20in%20your%20product:%20${encodeURIComponent(product.name)}.%20Please%20provide%20more%20details%20and%20pricing.`;
-
-                    const modal = new bootstrap.Modal(document.getElementById('productModal'));
-                    modal.show();
-                }
-            });
-        });
-    }
-
-
-
-    // Category filter buttons
-    document.querySelectorAll('.category-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            const category = this.getAttribute('data-category');
-            displayProducts(category);
-        });
-    });
-
     document.addEventListener('DOMContentLoaded', function() {
         // Product modal functionality
         const productModal = document.getElementById('productModal');
@@ -389,12 +334,13 @@ try {
             });
         }
 
-        // Highlight active category button
-        const categoryButtons = document.querySelectorAll('.category-btn');
-        categoryButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                categoryButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
+        // Update dropdown button text when a category is selected
+        const categoryDropdown = document.getElementById('categoryDropdown');
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function() {
+                categoryDropdown.textContent = this.textContent;
             });
         });
     });
