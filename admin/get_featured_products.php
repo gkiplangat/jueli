@@ -24,14 +24,14 @@ if ($result->num_rows > 0) {
         echo "<td>" . htmlspecialchars($product_name) . "</td>";
         echo "<td>" . htmlspecialchars($product_description) . "</td>";
         echo "<td>
-                <button class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#editModal" . $id . "'>Edit</button>
-                <button class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal" . $id . "'>Delete</button>
+                <button class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#editFeatured" . $id . "'>Edit</button>
+                <button class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteFeatured" . $id . "'>Delete</button>
               </td>";
         echo "</tr>";
 
         // Edit Modal
         echo "
-        <div class='modal fade' id='editModal$id' tabindex='-1' aria-labelledby='editModalLabel$id' aria-hidden='true'>
+        <div class='modal fade' id='editFeatured$id' tabindex='-1' aria-labelledby='editModalLabel$id' aria-hidden='true'>
             <div class='modal-dialog'>
                 <div class='modal-content'>
                     <div class='modal-header'>
@@ -43,10 +43,10 @@ if ($result->num_rows > 0) {
                             <!-- Hidden input for ID -->
                             <input type='hidden' name='id' value='$id'>
                             
-                            <!-- Product Category -->
+                           <!-- Product Category -->
                             <div class='mb-3'>
-                                <label for='product_category$id' class='form-label'>Product Category</label>
-                                <input type='text' class='form-control' id='product_category$id' name='product_category' value='" . htmlspecialchars($product_category) . "' required>
+                                <label for='product_category$id' class='form-label'>Product_category</label>
+                                <input type='text' class='form-control' id='product_categoryc$id' name='product_category' value='$product_category' required>
                             </div>
                             
                             <!-- Product Name -->
@@ -77,7 +77,7 @@ if ($result->num_rows > 0) {
 
         // Delete Modal
         echo "
-        <div class='modal fade' id='deleteModal$id' tabindex='-1' aria-labelledby='deleteModalLabel' aria-hidden='true'>
+        <div class='modal fade' id='deleteFeatured$id' tabindex='-1' aria-labelledby='deleteModalLabel' aria-hidden='true'>
             <div class='modal-dialog'>
                 <div class='modal-content'>
                     <div class='modal-header'>

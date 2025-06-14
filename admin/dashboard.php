@@ -242,7 +242,7 @@
                 </div>
             </div>
 
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div class="card">
                     <!-- Check for success or error flags -->
                     <?php if (isset($_GET['success']) && isset($_GET['type']) && $_GET['type'] === 'featuredS'): ?>
