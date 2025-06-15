@@ -212,7 +212,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="picture" class="form-label">Product Picture</label>
-                                        <input type="file" accept="image/*" class="form-control" id="product_picture"
+                                        <input type="file" class="form-control" id="product_picture"
                                             name="product_picture" required />
                                     </div>
                                 </div>
