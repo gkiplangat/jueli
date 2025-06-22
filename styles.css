@@ -146,17 +146,14 @@ a {
     padding: 10px 15px !important;
   }
 
-  .nav-link.active {
-    border-bottom: none;
-    background-color: rgba(255, 255, 255, 0.1);
-  }
+  
 }
 
 /* ===== Hero Sections ===== */
 .hero-section,
 .hero-slider {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+    url('./img/bg_4.jpg');
   background-size: cover;
   background-position: center;
   color: white;
@@ -570,42 +567,46 @@ footer {
   }
 }
 
-/* ===== Team Row Layout ===== */
+/* Team */
 .team-section {
-  background-color: var(--bg-lighter);
-  padding: 80px 0;
-  overflow-x: auto;
-  /* Allows horizontal scrolling on mobile */
-}
-
-.fa-whatsapp {
-  color: var(--primary-color);
+  padding: 60px 0;
+  background-color: #f9f9f9;
 }
 
 .team-container {
-  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 15px;
 }
 
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #003366;
+  margin-bottom: 15px;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 50px;
+  font-size: 1.1rem;
+}
+
 .team-row {
   display: flex;
-  flex-wrap: nowrap;
-  /* Prevents wrapping to new line */
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 30px;
-  padding: 20px 0;
 }
 
 .team-card {
-  flex: 0 0 280px;
-  /* Fixed width cards, won't grow or shrink */
   background: white;
-  border-radius: 8px;
+  border-radius: 10px;
+  overflow: hidden;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-  display: flex;
-  flex-direction: column;
+  transition: transform 0.3s ease;
+  width: 280px;
 }
 
 .team-card:hover {
@@ -613,7 +614,7 @@ footer {
 }
 
 .team-img {
-  height: 200px;
+  height: 250px;
   overflow: hidden;
 }
 
@@ -621,18 +622,35 @@ footer {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s;
+  transition: transform 0.5s ease;
 }
 
 .team-card:hover .team-img img {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .team-info {
   padding: 20px;
-  flex-grow: 1;
-  /* Makes info section fill remaining space */
+  text-align: center;
 }
+
+.team-info h3 {
+  margin-bottom: 5px;
+  color: #003366;
+}
+
+.team-info .position {
+  color: #FFA500;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.team-info .expertise {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

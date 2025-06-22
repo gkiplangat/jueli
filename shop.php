@@ -53,6 +53,16 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jueli Engineering Ltd</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="img/logo_2.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/logo_2.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/logo_2.png">
+    <link rel="manifest" href="img/logo_2.png">
+    <link rel="mask-icon" href="img/logo_2.png" color="#003366">
+    <meta name="msapplication-TileColor" content="#003366">
+    <meta name="theme-color" content="#003366">
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome for icons -->
@@ -63,6 +73,23 @@ try {
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+    .hero-section {
+        height: 60vh;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        background: url('img/bg_2.jpg') center/cover no-repeat;
+        color: white;
+        text-align: center;
+    }
+
+    .nav-link.active {
+        color: white !important;
+        font-weight: 600;
+        border-bottom: 2px solid #FFA500;
+    }
+    </style>
 
 </head>
 
@@ -79,16 +106,16 @@ try {
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php">Home</a>
+                            <a class="nav-link" href="index.php">HOME</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about.php">About Us</a>
+                            <a class="nav-link" href="about.php">ABOUT US</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="shop.php">Shop</a>
+                            <a class="nav-link active" aria-current="page" href="shop.php">SHOP</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact Us</a>
+                            <a class="nav-link" href="contact.php">CONTACT US</a>
                         </li>
                     </ul>
                 </div>
@@ -99,8 +126,7 @@ try {
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-            <h1 class="display-4 fw-bold">Quality Engineering Products</h1>
-            <p class="lead">Premium engineering supplies and equipment for all your project needs</p>
+
         </div>
     </section>
 
@@ -268,7 +294,7 @@ try {
                     <ul>
                         <li><a href="index.php">Home</a></li>
                         <li><a href="shop.php">Shop</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="contact.php">Contact Us</a></li>
                         <li><a href="about.php">About Us</a></li>
 
                     </ul>

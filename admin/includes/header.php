@@ -13,7 +13,16 @@ if (!isset($_SESSION['username'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jueli Engineering</title>
+    <title>Jueli Engineering Ltd</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../img/logo_2.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/logo_2.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../img/logo_2.png">
+    <link rel="manifest" href="../img/logo_2.png">
+    <link rel="mask-icon" href="../img/logo_2.png" color="#003366">
+    <meta name="msapplication-TileColor" content="#003366">
+    <meta name="theme-color" content="#003366">
 
     <!--Bootstrap CSS-->
     <link rel="stylesheet" href="css/bootstrap.min.css" />
